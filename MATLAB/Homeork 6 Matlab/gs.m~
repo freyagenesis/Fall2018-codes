@@ -1,0 +1,18 @@
+function [Q,R] = gs(X)
+    % Classical Gram-Schmidt.  [Q,R] = gs(X);
+    % n = number of rows
+    % p = predictors
+    [n,p] = size(X);
+    Q = zeros(n,p);
+    R = zeros(p,p);
+    V = zeros(n, p); %One row
+    for j = 1:p
+        V(:,j) = X(:,j);
+        for i = 1:j-1
+            R(i,j) = Q(:,i)'*X(:,j);
+            V(:,j) = V(:,j) - R(i,j)*Q(:,i);
+        end
+        R(j,j) = norm(V(:,j));
+        Q(:,j) = V(:,j)/R(j,j);
+     end
+end
